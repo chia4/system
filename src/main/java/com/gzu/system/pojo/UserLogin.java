@@ -2,7 +2,7 @@ package com.gzu.system.pojo;
 
 
 public class UserLogin {
-    enum type {
+    public enum type {
         PEOPLE,
         PLACE,
         AGENCY
