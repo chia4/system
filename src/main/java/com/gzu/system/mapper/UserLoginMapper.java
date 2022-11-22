@@ -4,6 +4,7 @@ import com.gzu.system.pojo.UserLogin;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+@Mapper
 public interface UserLoginMapper {
     /**
      * 向数据增加一条user用户

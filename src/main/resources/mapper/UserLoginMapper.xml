@@ -7,7 +7,7 @@
         insert into user_login values(#{username},#{passwordHash},#{type})
     </insert>
 
-    <select id="selectByUserName" resultType="UserLogin">
+    <select id="selectByUserName" resultType="com.gzu.system.pojo.UserLogin">
         select * from user_login where username=#{username}
     </select>
 
