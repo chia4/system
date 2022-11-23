@@ -20,11 +20,4 @@ public interface UserLoginMapper {
      */
     UserLogin selectByUserName(String username);
 
-    /**
-     * 根据用户名和密码查询记录
-     * @param username
-     * @param password
-     * @return
-     */
-    UserLogin selectByNameAndPwd(String username,String password);
 }
