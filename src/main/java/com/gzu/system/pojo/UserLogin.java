@@ -1,6 +1,5 @@
 package com.gzu.system.pojo;
 
-import org.springframework.stereotype.Component;
 
 public class UserLogin {
     public enum type {
