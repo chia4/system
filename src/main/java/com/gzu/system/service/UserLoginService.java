@@ -2,7 +2,9 @@ package com.gzu.system.service;
 
 import com.gzu.system.mapper.UserLoginMapper;
 import com.gzu.system.pojo.UserLogin;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -12,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 @Service
 public class UserLoginService {
 
+    @Autowired
     private UserLoginMapper mapper;
 
 
@@ -57,7 +60,11 @@ public class UserLoginService {
     }
 
 
+    @Transactional
     public int register(String username, String password, String type) {
+
+        boolean transactionFlag = false;
+
         //1.根据用户名查看用户是否被占用
         UserLogin userLoginBySelect = mapper.selectByUserName(username);
         //如果userLogin不为null
@@ -65,34 +72,47 @@ public class UserLoginService {
             return 1;
         }
 
-        //2.没被占用的用户名，将其密码哈希处理
-        String hashPassword = getSHA256StrJava(password);
-
-        //3.检查type类型是否正确
+        String hashPassword = null;
         UserLogin.type myType = null;
         try {
+            //2.没被占用的用户名，将其密码哈希处理
+            hashPassword = getSHA256StrJava(password);
+            //3.检查type类型是否正确
             myType = Enum.valueOf(UserLogin.type.class, type.toUpperCase());
         } catch (Exception e) {
-            return 2;
+            e.printStackTrace();
+            transactionFlag = true;
         }
 
-//        if(!(myType.equals(UserLogin.type.PEOPLE)||myType.equals(UserLogin.type.PLACE)||myType.equals(UserLogin.type.AGENCY))){
-//            return 2;
-//        }
         //3.插入user_login,根据情况报错
-        try {
-            UserLogin userLogin = new UserLogin();
-            userLogin.setUsername(username);
-            userLogin.setPasswordHash(hashPassword);
-            userLogin.setType(myType);
-            mapper.insert(userLogin);
-
-        } catch (Exception e) {
-            return 2;
+        if (!transactionFlag) {
+            try {
+                UserLogin userLogin = new UserLogin();
+                userLogin.setUsername(username);
+                userLogin.setPasswordHash(hashPassword);
+                userLogin.setType(myType);
+                mapper.insert(userLogin);
+            } catch (Exception e) {
+                e.printStackTrace();
+                transactionFlag = true;
+            }
         }
+
+
+        //4.只要有错就报错，不提交事务，并返回2
+        if (transactionFlag) {
+            try {
+                throw new RuntimeException();
+            } finally {
+                return 2;
+            }
+        }
+
+        //5.注册成功返回0
         return 0;
     }
 
+    @Transactional
     public int login(String username, String password) {
 
         UserLogin userLogin = null;
