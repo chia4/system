@@ -1,3 +1,14 @@
+.form-input {
+    width: 100px;
+    display: inline-block;
+    text-align: right;
+}
+
+.form-button {
+    margin-left: 100px;
+}
+
 .warning {
     color: red;
+    margin-left: 100px;
 }
