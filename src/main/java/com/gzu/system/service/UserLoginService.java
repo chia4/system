@@ -2,6 +2,7 @@ package com.gzu.system.service;
 
 import com.gzu.system.mapper.UserLoginMapper;
 import com.gzu.system.pojo.UserLogin;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -11,8 +12,8 @@ import java.security.NoSuchAlgorithmException;
 
 @Service
 public class UserLoginService {
-
-    private UserLoginMapper mapper;
+    @Autowired
+    UserLoginMapper mapper;
 
 
     /**
