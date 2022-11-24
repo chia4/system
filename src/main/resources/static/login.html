@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>区域疫情管理系统 | 登录</title>
+    <script src="js/login.js"></script>
+    <link rel="stylesheet" href="css/all.css">
+</head>
+
+<body>
+
+    <h1><a href="/">区域疫情管理系统 | 登录</a></h1>
+
+    <form action="/post-login-data" method="post">
+
+        <label for="form-username" class="form-input">用户名: </label>
+        <input type="text" name="username" id="form-username"><br>
+
+        <label for="form-password" class="form-input">密码: </label>
+        <input type="password" name="password" id="form-password"><br>
+
+        <div id="error-div" class="warning"></div>
+        <input type="submit" value="登录" id="form-submit" class="form-button">
+
+    </form>
+
+    <p><button id="register-button" class="form-button">注册</button></p>
+
+</body>
+
+</html>

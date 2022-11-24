@@ -13,9 +13,8 @@ import java.security.NoSuchAlgorithmException;
 
 @Service
 public class UserLoginService {
-
     @Autowired
-    private UserLoginMapper mapper;
+    UserLoginMapper mapper;
 
 
     /**

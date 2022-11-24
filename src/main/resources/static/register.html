@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>区域疫情管理系统 | 注册</title>
+    <script src="js/register.js"></script>
+    <link rel="stylesheet" href="css/all.css">
+</head>
+
+<body>
+
+    <h1 id="title"><a href="/">区域疫情管理系统 | 注册</a></h1>
+
+    <form action="/post-register-data" method="post">
+
+        <label for="form-type" class="form-input">角色: </label>
+        <select name="type" id="form-type">
+            <option value="not-selected">-</option>
+            <option value="people">用户</option>
+            <option value="place">场所</option>
+            <option value="agency">机构</option>
+        </select><br>
+
+        <label for="form-username" class="form-input">用户名: </label>
+        <input type="text" name="username" id="form-username"><br>
+
+        <label for="form-password" class="form-input">密码: </label>
+        <input type="password" name="password" id="form-password"><br>
+
+        <label for="form-check-password" class="form-input">确认密码: </label>
+        <input type="password" name="check-password" id="form-check-password"><br>
+
+        <div id="error-div" class="warning"></div>
+        <input type="submit" value="注册" id="form-submit" class="form-button">
+
+    </form>
+
+    <p><button id="login-button" class="form-button">登录</button></p>
+
+</body>
+
+</html>
