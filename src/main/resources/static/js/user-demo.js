@@ -8,7 +8,7 @@ window.onload = function () {
             var title;
             switch (response["userType"]) {
                 case "PEOPLE":
-                    title = " 区域疫情管理系统 | 用户 | 待开发";
+                    title = " 区域疫情管理系统 | 大众 | 待开发";
                     break;
                 case "PLACE":
                     title = " 区域疫情管理系统 | 场所 | 待开发";
