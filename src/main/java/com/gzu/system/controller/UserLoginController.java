@@ -17,6 +17,9 @@ public class UserLoginController {
     @Autowired
     UserLoginService userLoginService;
 
+    /**
+     * 根目录，将不同用户路由到各个页面
+     */
     @GetMapping("")
     public String index(HttpSession session) {
         if (session.getAttribute("userLoginMap") == null) {
@@ -56,12 +59,18 @@ public class UserLoginController {
         return "redirect:/login";
     }
 
+    /**
+     * 返回储存在当前会话session中的用户名和用户类型
+     */
     @ResponseBody
     @GetMapping("/user-login-data")
     public HashMap<String, String> userLoginData(HttpSession session) {
         return (HashMap<String, String>) session.getAttribute("userLoginMap");
     }
 
+    /**
+     * "/login"页面提交的登录信息表单
+     */
     @PostMapping("/post-login-data")
     public String loginData(
             @RequestParam("username") String username, @RequestParam("password") String password,
@@ -100,6 +109,9 @@ public class UserLoginController {
         throw new RuntimeException("发生错误");
     }
 
+    /**
+     * "/register"页面提交的注册信息表单
+     */
     @PostMapping("/post-register-data")
     public String registerData(
             @RequestParam("type") String type, @RequestParam("username") String username, @RequestParam("password") String password,
