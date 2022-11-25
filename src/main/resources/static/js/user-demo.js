@@ -1,6 +1,6 @@
 window.onload = function () {
     var request = new XMLHttpRequest();
-    request.open("GET", "user-login-data");
+    request.open("GET", "/user-login-data");
     request.send(null);
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
@@ -21,7 +21,7 @@ window.onload = function () {
             var bodyTitle = document.getElementById("title");
             var welcome = document.getElementById("welcome");
             bodyTitle.innerText = title;
-            welcome.innerText = "你好, " + response["username"]
+            welcome.innerText = "你好, " + response["username"];
         }
     }
 }

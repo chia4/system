@@ -1,10 +1,15 @@
 window.onload = function () {
-    var registerButton = document.getElementById("register-button");
-    var formSubmit = document.getElementById("form-submit");
-
-    formSubmit.disabled = true;
-    registerButton.onclick = function () {
-        window.location.href = "/register";
+    var request = new XMLHttpRequest();
+    request.open("GET", "/user-login-data");
+    request.send(null);
+    request.onreadystatechange = function () {
+        var response = JSON.parse(request.responseText);
+        if (request.readyState === 4 && request.status === 200) {
+            var welcome = document.getElementById("welcome");
+            var formUsername = document.getElementById("form-username");
+            welcome.innerText = "你好, " + response["username"];
+            formUsername.innerText = response["username"];
+        }
     }
 
     var errorDiv = document.getElementById("error-div");
@@ -16,6 +21,7 @@ window.onload = function () {
 
     configCheck();
 }
+
 
 function getParamValue(key) {
     var query = window.location.search.substring(1);
@@ -30,7 +36,7 @@ function getParamValue(key) {
 }
 
 function configCheck() {
-    var formElement = document.getElementById("login-form");
+    var formElement = document.getElementById("complete-form");
 
     var child = formElement.firstElementChild;
     for (var i = 0; i < formElement.childElementCount; i++) {
@@ -46,7 +52,7 @@ function configCheck() {
 }
 
 function check() {
-    var formElement = document.getElementById("login-form");
+    var formElement = document.getElementById("complete-form");
     var submitElement = document.getElementById("form-submit");
     var outputElement = document.getElementById("error-div");
     var passwordElement = document.getElementById("null");
