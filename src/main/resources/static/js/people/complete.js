@@ -1,10 +1,15 @@
 window.onload = function () {
-    var registerButton = document.getElementById("login-button");
-    var formSubmit = document.getElementById("form-submit");
-
-    formSubmit.disabled = true;
-    registerButton.onclick = function () {
-        window.location.href = "/login";
+    var request = new XMLHttpRequest();
+    request.open("GET", "/user-login-data");
+    request.send(null);
+    request.onreadystatechange = function () {
+        var response = JSON.parse(request.responseText);
+        if (request.readyState === 4 && request.status === 200) {
+            var welcome = document.getElementById("welcome");
+            var formUsername = document.getElementById("form-username");
+            welcome.innerText = "你好, " + response["username"];
+            formUsername.innerText = response["username"];
+        }
     }
 
     var errorDiv = document.getElementById("error-div");
@@ -16,6 +21,7 @@ window.onload = function () {
 
     configCheck();
 }
+
 
 function getParamValue(key) {
     var query = window.location.search.substring(1);
@@ -29,12 +35,8 @@ function getParamValue(key) {
     return false;
 }
 
-/**
- * 这个函数和下面的check()函数都是可以复用的，只需要更改每
- * 个函数中最上面的getElementById参数即可
- */
 function configCheck() {
-    var formElement = document.getElementById("register-form");
+    var formElement = document.getElementById("complete-form");
 
     var child = formElement.firstElementChild;
     for (var i = 0; i < formElement.childElementCount; i++) {
@@ -50,11 +52,11 @@ function configCheck() {
 }
 
 function check() {
-    var formElement = document.getElementById("register-form");
+    var formElement = document.getElementById("complete-form");
     var submitElement = document.getElementById("form-submit");
     var outputElement = document.getElementById("error-div");
-    var passwordElement = document.getElementById("form-password");
-    var checkPasswordElement = document.getElementById("form-check-password");
+    var passwordElement = document.getElementById("null");
+    var checkPasswordElement = document.getElementById("null");
 
     var child = formElement.firstElementChild;
     for (var i = 0; i < formElement.childElementCount; i++) {

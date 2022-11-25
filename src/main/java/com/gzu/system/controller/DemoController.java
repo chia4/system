@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class DemoController {
-    @GetMapping({"/people", "/place", "/agency"})
+    @GetMapping({"/place", "/agency"})
     public String userDemo() {
         return "forward:/user-demo.html";
     }

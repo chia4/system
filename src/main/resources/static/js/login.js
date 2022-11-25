@@ -1,22 +1,20 @@
 window.onload = function () {
-    var errorDiv = document.getElementById("error-div");
-    var errorInfo = getParamValue("error");
-
     var registerButton = document.getElementById("register-button");
     var formSubmit = document.getElementById("form-submit");
 
     formSubmit.disabled = true;
-    registerButton.onclick = function () { window.location.href = "/register"; }
+    registerButton.onclick = function () {
+        window.location.href = "/register";
+    }
 
-    if (errorInfo != false) {
+    var errorDiv = document.getElementById("error-div");
+    var errorInfo = getParamValue("error");
+
+    if (errorInfo !== false) {
         errorDiv.innerText = decodeURI(errorInfo);
     }
 
-    var formUsername = document.getElementById("form-username");
-    var formPassword = document.getElementById("form-password");
-
-    formUsername.onkeyup = check;
-    formPassword.onkeyup = check;
+    configCheck();
 }
 
 function getParamValue(key) {
@@ -24,25 +22,54 @@ function getParamValue(key) {
     var params = query.split("&");
     for (var i = 0; i < params.length; i++) {
         var param = params[i].split("=");
-        if (param[0] == key) {
+        if (param[0] === key) {
             return param[1];
         }
     }
     return false;
 }
 
-function check() {
-    var formUsername = document.getElementById("form-username");
-    var formPassword = document.getElementById("form-password");
+function configCheck() {
+    var formElement = document.getElementById("login-form");
 
-    var formSubmit = document.getElementById("form-submit");
-    var errorDiv = document.getElementById("error-div");
-
-    if (formUsername.value == "" || formPassword.value == "") {
-        errorDiv.innerText = "输入不能为空";
-        formSubmit.disabled = true;
-    } else {
-        errorDiv.innerText = "";
-        formSubmit.disabled = false;
+    var child = formElement.firstElementChild;
+    for (var i = 0; i < formElement.childElementCount; i++) {
+        if ((child.nodeName === "SELECT" || child.nodeName === "INPUT") && child.type !== "submit") {
+            if (child.nodeName === "SELECT") {
+                child.onchange = check;
+            } else {
+                child.onkeyup = check;
+            }
+        }
+        child = child.nextElementSibling;
     }
+}
+
+function check() {
+    var formElement = document.getElementById("login-form");
+    var submitElement = document.getElementById("form-submit");
+    var outputElement = document.getElementById("error-div");
+    var passwordElement = document.getElementById("null");
+    var checkPasswordElement = document.getElementById("null");
+
+    var child = formElement.firstElementChild;
+    for (var i = 0; i < formElement.childElementCount; i++) {
+        if ((child.nodeName === "SELECT" || child.nodeName === "INPUT") && child.type !== "submit") {
+            if ((child.nodeName === "SELECT" && child.value === "not-selected") || (child.nodeName === "INPUT" && child.value === "")) {
+                outputElement.innerText = "输入不能为空";
+                submitElement.disabled = true;
+                return;
+            }
+        }
+        child = child.nextElementSibling;
+    }
+    if (passwordElement != null && checkPasswordElement != null) {
+        if (passwordElement.value !== checkPasswordElement.value) {
+            outputElement.innerText = "两次密码输入不一致";
+            submitElement.disabled = true;
+            return;
+        }
+    }
+    outputElement.innerText = "";
+    submitElement.disabled = false;
 }
