@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gzu.system.mapper.PeopleMapper">
+
+        <select id="selectByUsername" resultType="People">
+
+            select *
+            from people_table
+            where username = #{username};
+
+        </select>
+        <insert id="insert">
+            insert into people_table
+            values (#{username},#{fullName},#{phoneNumber},#{idCardNumber},#{userGender},#{greenCodeAfter});
+
+        </insert>
+
+</mapper>
