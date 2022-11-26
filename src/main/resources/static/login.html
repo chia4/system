@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
     <h1><a href="/">区域疫情管理系统 | 登录</a></h1>
 
     <form action="/post-login-data" method="post" id="login-form">
@@ -22,12 +21,13 @@
         <label for="form-password" class="form-input">密码: </label>
         <input type="password" name="password" id="form-password"><br>
 
-        <div id="error-div" class="warning"></div>
-        <input type="submit" value="登录" id="form-submit" class="form-button">
+        <div id="error-div" class="warning"></div><br>
+
+        <input type="submit" value="登录" id="form-submit" class="form-button" disabled="true">
+
+        &nbsp<a href="/register"><button type="button">还没有账号?</button></a>
 
     </form>
-
-    <p><button id="register-button" class="form-button">注册</button></p>
 
 </body>
 

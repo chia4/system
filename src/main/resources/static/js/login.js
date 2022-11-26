@@ -1,12 +1,4 @@
 window.onload = function () {
-    var registerButton = document.getElementById("register-button");
-    var formSubmit = document.getElementById("form-submit");
-
-    formSubmit.disabled = true;
-    registerButton.onclick = function () {
-        window.location.href = "/register";
-    }
-
     var errorDiv = document.getElementById("error-div");
     var errorInfo = getParamValue("error");
 
