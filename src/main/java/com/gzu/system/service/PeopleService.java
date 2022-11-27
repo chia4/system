@@ -4,6 +4,9 @@ package com.gzu.system.service;
 import com.gzu.system.mapper.PeopleMapper;
 import com.gzu.system.pojo.People;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 /**
  * 需求:
@@ -23,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  */
 
+@Service
 public class PeopleService {
 
     @Autowired
@@ -37,6 +41,7 @@ public class PeopleService {
      * @param userGender
      * @return 0 or 1 or 2
      */
+    @Transactional
     public int completeInformation(String userName, String fullName, String phoneNumber, String idCardNumber, String userGender){
         //1.根据userName,查找people_table是否存在这个人
         People peopleBySelect = peopleMapper.selectByUsername(userName);
@@ -58,18 +63,17 @@ public class PeopleService {
             people.setIdCardNumber(idCardNumber);
             People.gender gender=Enum.valueOf(People.gender.class,userGender);
             people.setUserGender(gender);
+            people.setGreenCodeAfter(0);
+            peopleMapper.insert(people);
         }catch (Exception e){
             e.printStackTrace();
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             isError=true;
         }
 
         //3.检查是否有异常，如果有异常，触发回滚并返回2
         if (isError){
-            try {
-                throw new RuntimeException();
-            }finally {
-                return 2;
-            }
+            return 2;
         }
         //4.插入成功，没有异常，返回0
         return 0;

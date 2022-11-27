@@ -1,7 +1,9 @@
 package com.gzu.system.mapper;
 
 import com.gzu.system.pojo.People;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface PeopleMapper {
     /**
      * 根据username，查询是否存在这个人
