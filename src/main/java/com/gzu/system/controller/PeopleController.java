@@ -1,17 +1,64 @@
 package com.gzu.system.controller;
 
+import com.gzu.system.pojo.People;
+import com.gzu.system.service.PeopleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Controller()
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+
+@Controller
 public class PeopleController {
+
+    @Autowired
+    PeopleService peopleService;
+
     @GetMapping("/people")
-    public String index() {
-        return "redirect:/people/complete";
+    public String index(HttpSession session) {
+        HashMap<String, String> userLoginMap = (HashMap<String, String>) session.getAttribute("userLoginMap");
+        if (peopleService.getInformation(userLoginMap.get("username")) == null) {
+            return "forward:/people/complete.html";
+        } else {
+            return "forward:/people/people.html";
+        }
     }
 
-    @GetMapping("/people/complete")
-    public String complete() {
-        return "forward:/people/complete.html";
+    @ResponseBody
+    @GetMapping("/people/get-people-data")
+    public People getPeopleData(HttpSession session) {
+        HashMap<String, String> userLoginMap = (HashMap<String, String>) session.getAttribute("userLoginMap");
+        String username = userLoginMap.get("username");
+        return peopleService.getInformation(username);
+    }
+
+
+    @PostMapping("/people/post-complete-data")
+    public String peopleData(@RequestParam("full-name") String fullName, @RequestParam("phone-number") String phoneNumber,
+                             @RequestParam("id-card-number") String idCardNumber, @RequestParam("user-gender") String userGender,
+                             HttpSession session, RedirectAttributes redirectAttributes
+    ) {
+        HashMap<String, String> userLoginMap = (HashMap<String, String>) session.getAttribute("userLoginMap");
+        String username = userLoginMap.get("username");
+        if (peopleService.getInformation(username) == null) {
+            int completeStatus = peopleService.completeInformation(username, fullName, phoneNumber, idCardNumber, userGender);
+            switch (completeStatus) {
+                case 0:
+                    break;
+                case 1:
+                    redirectAttributes.addAttribute("error", "身份证被其他账号登记");
+                    break;
+                case 2:
+                    redirectAttributes.addAttribute("error", "发生错误");
+                    break;
+            }
+            return "redirect:/people";
+        }
+        throw new RuntimeException("发生错误");
     }
 }

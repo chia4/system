@@ -5,6 +5,7 @@ import com.gzu.system.pojo.UserLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -93,6 +94,7 @@ public class UserLoginService {
                 mapper.insert(userLogin);
             } catch (Exception e) {
                 e.printStackTrace();
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 transactionFlag = true;
             }
         }
@@ -100,11 +102,7 @@ public class UserLoginService {
 
         //4.只要有错就报错，不提交事务，并返回2
         if (transactionFlag) {
-            try {
-                throw new RuntimeException();
-            } finally {
-                return 2;
-            }
+           return 2;
         }
 
         //5.注册成功返回0

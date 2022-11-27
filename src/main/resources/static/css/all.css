@@ -1,14 +1,20 @@
 .form-input {
-    width: 70px;
+    width: 80px;
     display: inline-block;
     text-align: right;
 }
 
+#code{
+    width: 200px;
+    height: 200px;
+    margin-left: 20px;
+}
+
 .form-button {
-    margin-left: 70px;
+    margin-left: 80px;
 }
 
 .warning {
     color: red;
-    margin-left: 70px;
+    margin-left: 80px;
 }
