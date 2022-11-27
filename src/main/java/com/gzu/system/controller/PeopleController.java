@@ -1,12 +1,13 @@
 package com.gzu.system.controller;
 
+import com.gzu.system.pojo.People;
 import com.gzu.system.service.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -18,7 +19,7 @@ public class PeopleController {
     @Autowired
     PeopleService peopleService;
 
-    @RequestMapping("/people")
+    @GetMapping("/people")
     public String index(HttpSession session) {
         HashMap<String, String> userLoginMap = (HashMap<String, String>) session.getAttribute("userLoginMap");
         if (peopleService.getInformation(userLoginMap.get("username")) == null) {
@@ -26,6 +27,14 @@ public class PeopleController {
         } else {
             return "forward:/people/people.html";
         }
+    }
+
+    @ResponseBody
+    @GetMapping("/people/get-people-data")
+    public People getPeopleData(HttpSession session) {
+        HashMap<String, String> userLoginMap = (HashMap<String, String>) session.getAttribute("userLoginMap");
+        String username = userLoginMap.get("username");
+        return peopleService.getInformation(username);
     }
 
 
