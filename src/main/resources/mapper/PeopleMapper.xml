@@ -17,4 +17,10 @@
 
         </insert>
 
+        <select id="selectByIdCardNumber" resultType="People">
+            select *
+            from people_table
+            where id_card_number = #{idCardNumber};
+        </select>
+
 </mapper>

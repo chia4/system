@@ -19,5 +19,11 @@ public interface PeopleMapper {
      */
     int insert(People people);
 
+    /**
+     * 根据idCardNumber,查询是否存在这个人
+     * @param idCardNumber
+     * @return
+     */
+    People selectByIdCardNumber(String idCardNumber);
 
 }
