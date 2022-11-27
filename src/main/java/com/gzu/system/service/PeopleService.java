@@ -44,7 +44,7 @@ public class PeopleService {
     @Transactional
     public int completeInformation(String userName, String fullName, String phoneNumber, String idCardNumber, String userGender){
         //1.根据userName,查找people_table是否存在这个人
-        People peopleBySelect = peopleMapper.selectByUsername(userName);
+        People peopleBySelect = peopleMapper.selectByIdCardNumber(idCardNumber);
         //存在，则表示身份证已存在，无法插入
         if(peopleBySelect!=null){
             return 1;
