@@ -1,6 +1,7 @@
 package com.gzu.system.service;
 
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -13,6 +14,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.HashMap;
 
 /**
  *   需求: 传入字符串内容，返回byte类型存放的png格式的图片
@@ -22,27 +24,35 @@ import java.nio.file.Path;
 @Service
 public class UtilService {
 
-
-    public byte[] generateQRCode(String content, int width, int height,int color)throws WriterException, IOException {
+    /**
+     * 传入字符串内容和二维码颜色，返回byte类型存放的png格式的二维码图片
+     * 二维码默认白底0xFFFFFF
+     * @param content
+     * @param width
+     * @param height
+     * @param color
+     * @return byte[]
+     * @throws WriterException
+     */
+    public byte[] generateQRCode(String content, int width, int height, String color)throws WriterException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, width, height);
+        HashMap<EncodeHintType, Object> hints = new HashMap<>();
+        hints.put(EncodeHintType.CHARACTER_SET,"utf-8");
+        hints.put(EncodeHintType.MARGIN,"1");
+
+        BitMatrix bitMatrix = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, width, height, hints);
 
         ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
-        MatrixToImageConfig con = new MatrixToImageConfig( color, 0xFFFFFF ) ;
+        MatrixToImageConfig con = new MatrixToImageConfig( Color.decode(color).hashCode(), Color.decode("0XFFFFFF").hashCode()) ;
 
-        MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream,con);
+        try {
+            MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream,con);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
         byte[] pngData = pngOutputStream.toByteArray();
         return pngData;
-    }
-
-    public void generateQRCodeImage(String text, int width, int height, String filePath)
-            throws WriterException, IOException {
-        QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
-
-        Path path = FileSystems.getDefault().getPath(filePath);
-        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
-
     }
 
 }
