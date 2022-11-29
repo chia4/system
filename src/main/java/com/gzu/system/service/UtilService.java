@@ -12,13 +12,11 @@ import org.springframework.stereotype.Service;
 import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.HashMap;
 
 /**
- *   需求: 传入字符串内容，返回byte类型存放的png格式的图片
- *   byte[] generateQRCode(String content, int width, int height)
+ * 需求: 传入字符串内容，返回byte类型存放的png格式的图片
+ * byte[] generateQRCode(String content, int width, int height)
  */
 
 @Service
@@ -27,6 +25,7 @@ public class UtilService {
     /**
      * 传入字符串内容和二维码颜色，返回byte类型存放的png格式的二维码图片
      * 二维码默认白底0xFFFFFF
+     *
      * @param content
      * @param width
      * @param height
@@ -34,19 +33,25 @@ public class UtilService {
      * @return byte[]
      * @throws WriterException
      */
-    public byte[] generateQRCode(String content, int width, int height, String color)throws WriterException {
+    public byte[] generateQRCode(String content, int width, int height, String color) {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         HashMap<EncodeHintType, Object> hints = new HashMap<>();
-        hints.put(EncodeHintType.CHARACTER_SET,"utf-8");
-        hints.put(EncodeHintType.MARGIN,"1");
+        hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+        hints.put(EncodeHintType.MARGIN, "1");
 
-        BitMatrix bitMatrix = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, width, height, hints);
+        BitMatrix bitMatrix = null;
+        try {
+            bitMatrix = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, width, height, hints);
+        } catch (WriterException e) {
+            e.printStackTrace();
+            return null;
+        }
 
         ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
-        MatrixToImageConfig con = new MatrixToImageConfig( Color.decode(color).hashCode(), Color.decode("0XFFFFFF").hashCode()) ;
+        MatrixToImageConfig con = new MatrixToImageConfig(Color.decode(color).hashCode(), Color.decode("0XFFFFFF").hashCode());
 
         try {
-            MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream,con);
+            MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream, con);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
