@@ -8,14 +8,15 @@ window.onload = function () {
             var welcome = document.getElementById("welcome");
             var fullName = document.getElementById("full-name");
             var idCardNumber = document.getElementById("id-card-number");
-            var code = document.getElementById("code");
+            var greenCodeAfter = document.getElementById("green-code-after");
+            var greenCodeAfterLabel = document.getElementById("green-code-after-label");
             welcome.innerText = "你好, " + response["username"];
             fullName.innerText = response["fullName"];
             idCardNumber.innerText = response["idCardNumber"];
-            if (response["greenCodeAfter"] < Date.now() / 1000) {
-                code.style.background = "green";
-            } else {
-                code.style.background = "red";
+            if (response["greenCodeAfter"] > Date.now() / 1000) {
+                greenCodeAfterLabel.innerText = "恢复绿码: "
+                date = new Date(response["greenCodeAfter"] * 1000)
+                greenCodeAfter.innerText = date.toLocaleString();
             }
         }
     }
