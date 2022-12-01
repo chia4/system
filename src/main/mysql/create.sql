@@ -50,7 +50,7 @@ create table place_table
 (
     username      char(20) not null,
     place_name    char(20) not null,
-    place_address int      not null,
+    place_address char(40)      not null,
     constraint place_table_pk
         primary key (username),
     constraint place_table_user_login_username_fk
