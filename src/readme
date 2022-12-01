@@ -1,0 +1,25 @@
+注：每个POJO类对应一个表，每个字段对应一个列属性
+一.PlaceMapper
+POJO:Place
+
+1.传入场所信息，将场所信息插入place_table表内
+int insert(String username, String placeName, String placeAddress);
+
+2.传入username，查询place_table,返回场所信息
+Place selectPalaceByUserName(String username)
+
+3.将大众用户名、场所用户名和当前时间戳(秒为单位)插入people_track表
+int insertTrack(String peopleUsername, String placeUsername,int passingTime);
+
+二、AgencyMapper
+POJO:CovidTestAuthorization、CovidTestResult
+1.将大众用户名、机构用户名和当前时间戳(秒为单位)插入covid_test_authorization表
+int insert(String peopleUsername, String agencyUsername,int authorizationTime);
+
+2.在covid_test_authorization表里查询agencyUsername的所有授权记录
+ArrayList<CovidTestAuthorization> selectAuthorizationsByAgencyUsername(String agencyUsername);
+
+3.在covid_test_result表里查询peopleUsername的所有核酸检测记录
+ArrayList<CovidTestResult> selectResultsByPeopleUsername(String peopleUsername);
+
+
