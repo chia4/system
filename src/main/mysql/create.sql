@@ -32,10 +32,9 @@ create unique index people_table_id_card_number_uindex
 
 create table agency_table
 (
-    username       char(20)              not null,
-    agency_name    char(20)              not null,
-    agency_address char(40)              not null,
-    risk           boolean default false not null comment '是否为风险地区',
+    username       char(20) not null,
+    agency_name    char(20) not null,
+    agency_address char(40) not null,
     constraint agency_table_pk
         primary key (username),
     constraint agency_table_user_login_username_fk
@@ -48,9 +47,10 @@ create unique index agency_table_agency_name_uindex
 
 create table place_table
 (
-    username      char(20) not null,
-    place_name    char(20) not null,
-    place_address int      not null,
+    username      char(20)              not null,
+    place_name    char(20)              not null,
+    place_address char(40)              not null,
+    risk          boolean default false not null comment '是否为风险地区',
     constraint place_table_pk
         primary key (username),
     constraint place_table_user_login_username_fk
