@@ -31,7 +31,7 @@ public class PlaceService {
         boolean isError=false;
         int count=0;
         try{
-            mapper.insert(username, placeName, placeAddress);
+            count=mapper.insert(username, placeName, placeAddress);
         } catch (Exception e){
             e.printStackTrace();
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
