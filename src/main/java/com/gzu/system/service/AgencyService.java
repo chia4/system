@@ -26,6 +26,10 @@ public class AgencyService {
 
     @Autowired
     private PlaceMapper placeMapper;
+
+    @Autowired
+    private AgencyMapper agencyMapper;
+
     /** 将大众用户名、机构用户名和当前时间戳(秒为单位)插入covid_test_authorization表
      *  不用验证用户类型，我会在响应层验证
      *  返回值:
@@ -230,5 +234,42 @@ public class AgencyService {
         return 0;
 
     }
+    /** 传入机构信息，将场所信息插入agency_table表内
+     *  返回值:
+     *  0 - 成功
+     *  1 - agencyName已存在
+     *  2 - 其他错误
+     */
+    @Transactional
+    public int completeInformation(String username, String agencyName, String agencyAddress){
+        Agency agencyBySelect = agencyMapper.selectByAgencyName(agencyName);
+        if(agencyBySelect!=null){
+            return 1;
+        }
+        boolean isError=false;
+        int count=0;
+        try{
+            count=agencyMapper.insert(username, agencyName, agencyAddress);
+        } catch (Exception e){
+            e.printStackTrace();
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            isError=true;
+        }
+
+        if (isError||count==0){
+            return 2;
+        }
+        return 0;
+    }
+
+    /** 传入username，返回机构信息
+     *  返回值:
+     *  Agency - 成功
+     *  null - 失败
+     */
+    public Agency getInformation(String username){
+        return agencyMapper.selectByUserName(username);
+    }
+
 }
 

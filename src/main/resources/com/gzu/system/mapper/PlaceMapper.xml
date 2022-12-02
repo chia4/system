@@ -5,15 +5,13 @@
 <mapper namespace="com.gzu.system.mapper.PlaceMapper">
 
     <select id="selectPalaceByUserName" resultType="Place">
-
         select *
         from place_table
         where username = #{userName};
-
     </select>
     <insert id="insert">
         insert into place_table
-        values (#{userName},#{placeName},#{placeAddress});
+        values (#{userName},#{placeName},#{placeAddress},0);
 
     </insert>
 
