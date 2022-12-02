@@ -1,7 +1,7 @@
 package com.gzu.system.pojo;
 
 public class Place {
-    private String userName;
+    private String username;
     private String placeName;
     private String placeAddress;
     private Integer lowRiskAfter;
@@ -9,19 +9,19 @@ public class Place {
     public Place() {
     }
 
-    public Place(String userName, String placeName, String placeAddress, Integer lowRiskAfter) {
-        this.userName = userName;
+    public Place(String username, String placeName, String placeAddress, Integer lowRiskAfter) {
+        this.username = username;
         this.placeName = placeName;
         this.placeAddress = placeAddress;
         this.lowRiskAfter = lowRiskAfter;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPlaceName() {
@@ -51,7 +51,7 @@ public class Place {
     @Override
     public String toString() {
         return "Place{" +
-                "userName='" + userName + '\'' +
+                "username='" + username + '\'' +
                 ", placeName='" + placeName + '\'' +
                 ", placeAddress='" + placeAddress + '\'' +
                 ", lowRiskAfter=" + lowRiskAfter +

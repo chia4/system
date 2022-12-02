@@ -30,7 +30,7 @@ public class PlaceController {
 
 
     @ResponseBody
-    @GetMapping("/place/get-people-data")
+    @GetMapping("/place/get-place-data")
     public Place getPlaceData(HttpSession session) {
         HashMap<String, String> userLoginMap = (HashMap<String, String>) session.getAttribute("userLoginMap");
         String username = userLoginMap.get("username");

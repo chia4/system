@@ -1,10 +1,10 @@
 .form-input {
-    width: 80px;
+    width: 90px;
     display: inline-block;
     text-align: right;
 }
 
-#code{
+#code {
     width: 200px;
     height: 200px;
     margin-left: 20px;
