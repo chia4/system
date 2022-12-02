@@ -47,10 +47,10 @@ create unique index agency_table_agency_name_uindex
 
 create table place_table
 (
-    username      char(20)              not null,
-    place_name    char(20)              not null,
-    place_address char(40)              not null,
-    risk          boolean default false not null comment '是否为风险地区',
+    username       char(20)      not null,
+    place_name     char(20)      not null,
+    place_address  char(40)      not null,
+    low_risk_after int default 0 not null comment '在这个时间戳之后该地区由高风险转为低风险',
     constraint place_table_pk
         primary key (username),
     constraint place_table_user_login_username_fk
