@@ -23,5 +23,13 @@
 
     </insert>
 
+    <select id="selectPlaceByPlaceName" resultType="Place">
+        select * from place_table where place_name = #{placeName};
+    </select>
+
+    <update id="updateRisk">
+        update place_table set low_risk_after=#{risk} where place_name=#{placeName}
+    </update>
+
 
 </mapper>

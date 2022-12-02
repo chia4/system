@@ -145,5 +145,13 @@ public class UserLoginService {
 
     }
 
+    /** 根据输入的username在user_login表查询
+     *  返回值:
+     *  UserLogin - 成功
+     *  null - 失败
+     */
+    public UserLogin getUserByUsername(String username){
+        return mapper.selectByUserName(username);
+    }
 
 }

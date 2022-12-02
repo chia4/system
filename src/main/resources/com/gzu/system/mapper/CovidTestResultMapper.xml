@@ -11,6 +11,14 @@
         where people_username= #{peopleUsername};
 
     </select>
+    <!--
+         int insert(@Param("peopleUsername") String peopleUsername,@Param("agencyUsername")  String agencyUsername,
+               @Param("authorizationTime") int authorizationTime, @Param("result") String result);
+    -->
+    <insert id="insert">
+        insert into covid_test_result(people_username,agency_username,result_time,result)
+        values (#{peopleUsername},#{agencyUsername},#{authorizationTime},#{result})
+    </insert>
 
 
 

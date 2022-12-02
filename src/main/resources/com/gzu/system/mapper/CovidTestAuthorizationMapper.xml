@@ -17,7 +17,18 @@
 
     </insert>
 
-
+    <select id="selectOne" resultType="CovidTestAuthorization">
+        select * from covid_test_authorization
+        where people_username=#{peopleUsername} and agency_username=#{agencyUsername}
+        and authorization_time=#{authorizationTime}
+    </select>
+    
+    <delete id="deleteOne">
+        delete from covid_test_authorization
+        where people_username=#{peopleUsername}
+        and agency_username=#{agencyUsername}
+        and authorization_time=#{authorizationTime}
+    </delete>
 
 
 </mapper>

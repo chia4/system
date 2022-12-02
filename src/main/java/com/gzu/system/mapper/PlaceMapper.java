@@ -2,6 +2,7 @@ package com.gzu.system.mapper;
 
 import com.gzu.system.pojo.Place;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface PlaceMapper {
@@ -15,4 +16,11 @@ public interface PlaceMapper {
     //3.将大众用户名、场所用户名和当前时间戳(秒为单位)插入people_track表
 
     int insertTrack(String peopleUsername, String placeUsername,int passingTime);
+
+    Place selectPlaceByPlaceName(String placeName);
+
+    //更新危险等级
+    int updateRisk(@Param("placeName") String placeName,@Param("risk") int risk);
+
+
 }
