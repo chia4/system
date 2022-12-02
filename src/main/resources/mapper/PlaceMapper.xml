@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gzu.system.mapper.PlaceMapper">
+
+    <select id="selectPalaceByUserName" resultType="Place">
+
+        select *
+        from place_table
+        where username = #{userName};
+
+    </select>
+    <insert id="insert">
+        insert into place_table
+        values (#{userName},#{placeName},#{placeAddress});
+
+    </insert>
+
+    <insert id="insertTrack">
+        insert into people_track
+        values (#{peopleUsername},#{placeUsername},#{passingTime});
+
+    </insert>
+
+    <select id="selectPlaceByPlaceName" resultType="Place">
+        select * from place_table where place_name = #{placeName};
+    </select>
+
+    <update id="updateRisk">
+        update place_table set low_risk_after=#{risk} where place_name=#{placeName}
+    </update>
+
+
+</mapper>
