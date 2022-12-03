@@ -2,7 +2,6 @@ package com.gzu.system.mapper;
 
 import com.gzu.system.pojo.UserLogin;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 @Mapper
 public interface UserLoginMapper {

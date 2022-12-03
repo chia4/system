@@ -134,7 +134,7 @@ public class AgencyService {
         count=0;
         try{
             CovidTestResult.type myresult=Enum.valueOf(CovidTestResult.type.class,result);
-            count=covidTestResultMapper.insert(peopleUsername,agencyUsername,authorizationTime,myresult);
+            count=covidTestResultMapper.insert(peopleUsername,agencyUsername,(int) (new Date().getTime() / 1000),myresult);
         }catch (Exception e){
             e.printStackTrace();
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -151,6 +151,7 @@ public class AgencyService {
                 new Thread(){
                     @Override
                     public void run() {
+
                         /** 首先验证(peopleUsername, agencyUsername, authorizationTime)是否存在
                          *  于covid_test_authorization表里
                          *  如果存在，在covid_test_authorization表里删除这条记录，在covid_test_result
@@ -176,7 +177,7 @@ public class AgencyService {
                          *
                          */
                         //根据阳性用户查找当前时间七天内的所有记录
-                        int nowTime = (int) new Date().getTime() / 1000;//现在的时间
+                        int nowTime = (int) (new Date().getTime() / 1000);//现在的时间
                         int beforeTime=nowTime-60*60*24*7;//七天前
                         List<PeopleTrack> peopleTracks = peopleTrackMapper.selectByNameAndDays(peopleUsername, nowTime, beforeTime);//七天内所有记录
                         HashMap<String, List<PeopleTrack>> placeNameTrackMap = new HashMap<>();
@@ -208,7 +209,7 @@ public class AgencyService {
                                 //输出密接人名字
                                 System.out.print(pUserName+" ");
                                 //查询场所信息
-                                Place place = placeMapper.selectPlaceByPlaceName(placeName);
+                                Place place = placeMapper.selectPalaceByUserName(placeName);
                                 //旧值和新值比较，如果大就修改，如果小就不处理
                                 if(place.getLowRiskAfter()<newTime){
                                     placeMapper.updateRisk(placeName,newTime);

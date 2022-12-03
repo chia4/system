@@ -1,6 +1,7 @@
 package com.gzu.system.mapper;
 
 import com.gzu.system.pojo.CovidTestAuthorization;
+import com.gzu.system.pojo.SimpleAuthorization;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,4 +24,7 @@ public interface CovidTestAuthorizationMapper {
     int deleteOne(@Param("peopleUsername") String peopleUsername, @Param("agencyUsername") String agencyUsername,
                   @Param("authorizationTime") int authorizationTime);
 
+    ArrayList<SimpleAuthorization> selectMapToSimpleAuthorization(String peopleUsername);
+
+    ArrayList<CovidTestAuthorization> selectResultsByPeopleUsername(String peopleUsername);
 }

@@ -3,17 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gzu.system.mapper.PeopleTrackMapper">
-    <select id="selectByPeopleUsername" resultType="PeopleTrack">
+    <select id="selectByNameAndDays" resultType="PeopleTrack">
         select * from people_track where people_username=#{peopleUsername}
                                      and passing_time<![CDATA[ >= ]]>#{beforeDays}
-                                     and passing_time<![CDATA[ <= ]]>#{nowdays}
+                                     and passing_time<![CDATA[ <= ]]>#{nowDays}
 
     </select>
 
     <select id="selectByPlaceNameAndDays" resultType="PeopleTrack">
         select * from people_track where place_username=#{placeUsername}
                                      and passing_time<![CDATA[ >= ]]>#{beforeDays}
-                                     and passing_time<![CDATA[ <= ]]>#{nowdays}
+                                     and passing_time<![CDATA[ <= ]]>#{nowDays}
 
     </select>
 </mapper>

@@ -8,12 +8,17 @@ public class CovidTestResult {
 
     private String peopleUsername;
     private String agencyUsername;
-    private type type;
+    private type result;
+    private int resultTime;
 
-    public CovidTestResult(String peopleUsername, String agencyUsername, CovidTestResult.type type) {
+    public CovidTestResult() {
+    }
+
+    public CovidTestResult(String peopleUsername, String agencyUsername, type result, int resultTime) {
         this.peopleUsername = peopleUsername;
         this.agencyUsername = agencyUsername;
-        this.type = type;
+        this.result = result;
+        this.resultTime = resultTime;
     }
 
     public String getPeopleUsername() {
@@ -32,12 +37,20 @@ public class CovidTestResult {
         this.agencyUsername = agencyUsername;
     }
 
-    public CovidTestResult.type getType() {
-        return type;
+    public type getResult() {
+        return result;
     }
 
-    public void setType(CovidTestResult.type type) {
-        this.type = type;
+    public void setResult(type result) {
+        this.result = result;
+    }
+
+    public int getResultTime() {
+        return resultTime;
+    }
+
+    public void setResultTime(int resultTime) {
+        this.resultTime = resultTime;
     }
 
     @Override
@@ -45,7 +58,8 @@ public class CovidTestResult {
         return "CovidTestResult{" +
                 "peopleUsername='" + peopleUsername + '\'' +
                 ", agencyUsername='" + agencyUsername + '\'' +
-                ", type=" + type +
+                ", result=" + result +
+                ", resultTime=" + resultTime +
                 '}';
     }
 }

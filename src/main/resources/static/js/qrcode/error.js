@@ -3,8 +3,8 @@ window.onload = function () {
     request.open("GET", "/user-login-data");
     request.send(null);
     request.onreadystatechange = function () {
-        var response = JSON.parse(request.responseText);
         if (request.readyState === 4 && request.status === 200) {
+            var response = JSON.parse(request.responseText);
             $("welcome").innerText = "你好, " + response["username"];
         }
     }

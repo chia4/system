@@ -13,6 +13,10 @@ public class CovidTestAuthorization {
         this.authorizationTime = authorizationTime;
     }
 
+    public CovidTestAuthorization() {
+
+    }
+
     public String getPeopleUsername() {
         return peopleUsername;
     }

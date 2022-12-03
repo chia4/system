@@ -1,12 +1,16 @@
 package com.gzu.system.service;
 
 
+import com.gzu.system.mapper.CovidTestAuthorizationMapper;
+import com.gzu.system.mapper.CovidTestResultMapper;
 import com.gzu.system.mapper.PeopleMapper;
-import com.gzu.system.pojo.People;
+import com.gzu.system.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+
+import java.util.ArrayList;
 
 /**
  * 需求:
@@ -31,6 +35,13 @@ public class PeopleService {
 
     @Autowired
     private PeopleMapper peopleMapper;
+
+    @Autowired
+    private CovidTestResultMapper covidTestResultMapper;
+
+
+    @Autowired
+    private CovidTestAuthorizationMapper covidTestAuthorizationMapper;
 
     /**
      * 传入用户信息，将用户信息插入people_table表内
@@ -86,6 +97,36 @@ public class PeopleService {
      */
     public People getInformation(String username){
         return peopleMapper.selectByUsername(username);
+    }
+
+
+
+    /** 在covid_test_result表里查询peopleUsername的所有核酸检测记录
+     *  然后和agency_table按照agency_username连接查询
+     *  返回值:
+     *  ArrayList<com.gzu.system.pojo.SimpleResult> - 成功
+     *  null - 无记录
+     */
+    public ArrayList<SimpleResult> getSimpleResult(String peopleUsername){
+        ArrayList<SimpleResult> simpleResults = covidTestResultMapper.selectMapToSimpleResult(peopleUsername);
+        if (simpleResults.size()==0){
+            return null;
+        }
+        return simpleResults;
+    }
+
+    /** 在covid_test_authorization表里查询peopleUsername的所有核酸检测记录
+     *  然后和agency_table按照agency_username连接查询
+     *  返回值:
+     *  ArrayList<com.gzu.system.pojo.SimpleAuthorization> - 成功
+     *  null - 无记录
+     */
+    public ArrayList<SimpleAuthorization> getSimpleAuthorization(String peopleUsername){
+        ArrayList<SimpleAuthorization> simpleAuthorizations = covidTestAuthorizationMapper.selectMapToSimpleAuthorization(peopleUsername);
+        if(simpleAuthorizations.size()==0){
+            return null;
+        }
+        return simpleAuthorizations;
     }
 
 }
