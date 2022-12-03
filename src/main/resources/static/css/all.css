@@ -22,11 +22,17 @@ td {
 }
 
 .form-button {
-    margin-left: 80px;
+    margin-left: 90px;
 }
 
 .warning {
     color: red;
+    margin-left: 90px;
+}
+
+.title-warning {
+    color: red;
+    margin-left: 50px;
 }
 
 .title {

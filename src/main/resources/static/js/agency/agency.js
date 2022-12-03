@@ -3,8 +3,8 @@ window.onload = function () {
     request.open("GET", "/agency/get-agency-data");
     request.send(null);
     request.onreadystatechange = function () {
-        var response = JSON.parse(request.responseText);
         if (request.readyState === 4 && request.status === 200) {
+            var response = JSON.parse(request.responseText);
             $("welcome").innerText = "你好, " + response["username"];
             $("agency-name").innerText = "机构: " + response["agencyName"];
         }
@@ -39,13 +39,22 @@ function getData() {
     request.open("GET", "/agency/get-authorization");
     request.send(null);
     request.onreadystatechange = function () {
-        var response = JSON.parse(request.responseText);
-        for (var set in response) {
-            var row = dataTable.insertRow(-1)
-            var cell = row.insertCell(-1);
-            cell.innerText = response[set]["peopleUsername"];
-            cell = row.insertCell(-1);
-            cell.innerText = response[set]["authorizationTime"];
+        if (request.readyState === 4 && request.status === 200) {
+            var response = JSON.parse(request.responseText);
+            if (response.length === 0) {
+                var row = dataTable.insertRow(-1);
+                var cell = row.insertCell(-1);
+                cell.colSpan = "2";
+                cell.innerText = "空";
+            } else {
+                for (var set in response) {
+                    var row = dataTable.insertRow(-1);
+                    var cell = row.insertCell(-1);
+                    cell.innerText = response[set]["peopleUsername"];
+                    cell = row.insertCell(-1);
+                    cell.innerText = response[set]["authorizationTime"];
+                }
+            }
         }
     }
 }
