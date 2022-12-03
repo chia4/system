@@ -134,7 +134,7 @@ public class AgencyService {
         count=0;
         try{
             CovidTestResult.type myresult=Enum.valueOf(CovidTestResult.type.class,result);
-            count=covidTestResultMapper.insert(peopleUsername,agencyUsername,authorizationTime,myresult);
+            count=covidTestResultMapper.insert(peopleUsername,agencyUsername,(int) (new Date().getTime() / 1000),myresult);
         }catch (Exception e){
             e.printStackTrace();
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -176,7 +176,7 @@ public class AgencyService {
                          *
                          */
                         //根据阳性用户查找当前时间七天内的所有记录
-                        int nowTime = (int) new Date().getTime() / 1000;//现在的时间
+                        int nowTime = (int) (new Date().getTime() / 1000);//现在的时间
                         int beforeTime=nowTime-60*60*24*7;//七天前
                         List<PeopleTrack> peopleTracks = peopleTrackMapper.selectByNameAndDays(peopleUsername, nowTime, beforeTime);//七天内所有记录
                         HashMap<String, List<PeopleTrack>> placeNameTrackMap = new HashMap<>();

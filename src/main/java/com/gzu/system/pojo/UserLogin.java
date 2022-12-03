@@ -35,4 +35,13 @@ public class UserLogin {
     public void setType(UserLogin.type type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "UserLogin{" +
+                "username='" + username + '\'' +
+                ", passwordHash='" + passwordHash + '\'' +
+                ", type=" + type +
+                '}';
+    }
 }

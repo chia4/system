@@ -5,7 +5,6 @@
 <mapper namespace="com.gzu.system.mapper.CovidTestResultMapper">
 
     <select id="selectResultsByPeopleUsername" resultType="CovidTestResult">
-
         select *
         from covid_test_result
         where people_username= #{peopleUsername};
@@ -17,7 +16,7 @@
     -->
     <insert id="insert">
         insert into covid_test_result(people_username,agency_username,result_time,result)
-        values (#{peopleUsername},#{agencyUsername},#{authorizationTime},#{result})
+        values (#{peopleUsername},#{agencyUsername},#{resultTime},#{result})
     </insert>
 
 
