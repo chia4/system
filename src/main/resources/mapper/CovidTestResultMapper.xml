@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gzu.system.mapper.CovidTestResultMapper">
+
+    <select id="selectResultsByPeopleUsername" resultType="CovidTestResult">
+
+        select *
+        from covid_test_result
+        where people_username= #{peopleUsername};
+
+    </select>
+    <!--
+         int insert(@Param("peopleUsername") String peopleUsername,@Param("agencyUsername")  String agencyUsername,
+               @Param("authorizationTime") int authorizationTime, @Param("result") String result);
+    -->
+    <insert id="insert">
+        insert into covid_test_result(people_username,agency_username,result_time,result)
+        values (#{peopleUsername},#{agencyUsername},#{authorizationTime},#{result})
+    </insert>
+
+
+
+
+
+</mapper>

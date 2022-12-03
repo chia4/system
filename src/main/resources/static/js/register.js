@@ -1,12 +1,15 @@
 window.onload = function () {
-    var errorDiv = document.getElementById("error-div");
     var errorInfo = getParamValue("error");
 
     if (errorInfo !== false) {
-        errorDiv.innerText = decodeURI(errorInfo);
+        $("error-div").innerText = errorInfo;
     }
 
     configCheck();
+}
+
+function $(x) {
+    return document.getElementById(x);
 }
 
 function getParamValue(key) {
@@ -15,7 +18,7 @@ function getParamValue(key) {
     for (var i = 0; i < params.length; i++) {
         var param = params[i].split("=");
         if (param[0] === key) {
-            return param[1];
+            return decodeURI(param[1]);
         }
     }
     return false;
@@ -26,7 +29,7 @@ function getParamValue(key) {
  * 个函数中最上面的getElementById参数即可
  */
 function configCheck() {
-    var formElement = document.getElementById("register-form");
+    var formElement = $("register-form");
 
     var child = formElement.firstElementChild;
     for (var i = 0; i < formElement.childElementCount; i++) {
@@ -42,11 +45,11 @@ function configCheck() {
 }
 
 function check() {
-    var formElement = document.getElementById("register-form");
-    var submitElement = document.getElementById("form-submit");
-    var outputElement = document.getElementById("error-div");
-    var passwordElement = document.getElementById("form-password");
-    var checkPasswordElement = document.getElementById("form-check-password");
+    var formElement = $("register-form");
+    var submitElement = $("form-submit");
+    var outputElement = $("error-div");
+    var passwordElement = $("form-password");
+    var checkPasswordElement = $("form-check-password");
 
     var child = formElement.firstElementChild;
     for (var i = 0; i < formElement.childElementCount; i++) {

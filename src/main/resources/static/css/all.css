@@ -1,10 +1,10 @@
 .form-input {
-    width: 80px;
+    width: 90px;
     display: inline-block;
     text-align: right;
 }
 
-#code{
+#code {
     width: 200px;
     height: 200px;
     margin-left: 20px;
@@ -16,5 +16,8 @@
 
 .warning {
     color: red;
-    margin-left: 80px;
+}
+
+.title {
+    margin-left: 50px;
 }

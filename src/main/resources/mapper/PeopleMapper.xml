@@ -23,4 +23,9 @@
             where id_card_number = #{idCardNumber};
         </select>
 
+        <update id="updateByUsername">
+            update people_table
+            set green_code_after=#{greenCodeAfter}
+            where username=#{username}
+        </update>
 </mapper>

@@ -5,23 +5,22 @@ window.onload = function () {
     request.onreadystatechange = function () {
         var response = JSON.parse(request.responseText);
         if (request.readyState === 4 && request.status === 200) {
-            var welcome = document.getElementById("welcome");
-            var formUsername = document.getElementById("form-username");
-            welcome.innerText = "你好, " + response["username"];
-            formUsername.innerText = response["username"];
+            $("welcome").innerText = "你好, " + response["username"];
+            $("form-username").innerText = response["username"];
         }
     }
 
-    var errorDiv = document.getElementById("error-div");
     var errorInfo = getParamValue("error");
-
     if (errorInfo !== false) {
-        errorDiv.innerText = decodeURI(errorInfo);
+        $("error-div").innerText = errorInfo;
     }
 
     configCheck();
 }
 
+function $(x) {
+    return document.getElementById(x);
+}
 
 function getParamValue(key) {
     var query = window.location.search.substring(1);
@@ -29,14 +28,14 @@ function getParamValue(key) {
     for (var i = 0; i < params.length; i++) {
         var param = params[i].split("=");
         if (param[0] === key) {
-            return param[1];
+            return decodeURI(param[1]);
         }
     }
     return false;
 }
 
 function configCheck() {
-    var formElement = document.getElementById("complete-form");
+    var formElement = $("complete-form");
 
     var child = formElement.firstElementChild;
     for (var i = 0; i < formElement.childElementCount; i++) {
@@ -52,11 +51,11 @@ function configCheck() {
 }
 
 function check() {
-    var formElement = document.getElementById("complete-form");
-    var submitElement = document.getElementById("form-submit");
-    var outputElement = document.getElementById("error-div");
-    var passwordElement = document.getElementById("null");
-    var checkPasswordElement = document.getElementById("null");
+    var formElement = $("complete-form");
+    var submitElement = $("form-submit");
+    var outputElement = $("error-div");
+    var passwordElement = $("null");
+    var checkPasswordElement = $("null");
 
     var child = formElement.firstElementChild;
     for (var i = 0; i < formElement.childElementCount; i++) {

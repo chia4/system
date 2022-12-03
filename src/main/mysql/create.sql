@@ -11,6 +11,7 @@ create table user_login
         primary key (username)
 );
 
+
 create table people_table
 (
     username         char(20)        not null,
@@ -28,6 +29,7 @@ create table people_table
 create unique index people_table_id_card_number_uindex
     on people_table (id_card_number);
 
+
 create table agency_table
 (
     username       char(20) not null,
@@ -41,6 +43,23 @@ create table agency_table
 
 create unique index agency_table_agency_name_uindex
     on agency_table (agency_name);
+
+
+create table place_table
+(
+    username       char(20)      not null,
+    place_name     char(20)      not null,
+    place_address  char(40)      not null,
+    low_risk_after int default 0 not null comment '在这个时间戳之后该地区由高风险转为低风险',
+    constraint place_table_pk
+        primary key (username),
+    constraint place_table_user_login_username_fk
+        foreign key (username) references user_login (username)
+);
+
+create unique index place_table_place_name_uindex
+    on place_table (place_name);
+
 
 create table covid_test_authorization
 (
@@ -71,3 +90,18 @@ create table covid_test_result
         foreign key (people_username) references people_table (username)
 )
     comment '核酸结果表';
+
+
+create table people_track
+(
+    people_username char(20) not null,
+    place_username  char(20) not null,
+    passing_time    int      not null comment '经过场所的时间戳',
+    constraint people_track_pk
+        primary key (people_username, place_username, passing_time),
+    constraint people_track_people_table_username_fk
+        foreign key (people_username) references people_table (username),
+    constraint people_track_place_table_username_fk
+        foreign key (place_username) references place_table (username)
+)
+    comment '用户经过场所表';
