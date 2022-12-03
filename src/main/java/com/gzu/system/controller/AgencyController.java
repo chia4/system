@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Controller
@@ -93,4 +94,16 @@ public class AgencyController {
         return "forward:/agency/registration-sampling-result.html";
     }
 
+    @ResponseBody
+    @GetMapping("/agency/get-authorization")
+    public ArrayList<CovidTestAuthorization> getAuthorization(HttpSession session) {
+        HashMap<String, String> userLoginMap = (HashMap<String, String>) session.getAttribute("userLoginMap");
+        String username = userLoginMap.get("username");
+        ArrayList<CovidTestAuthorization> authorizations = agencyService.getAuthorization(username);
+        if (authorizations == null) {
+            authorizations = new ArrayList<>();
+            authorizations.add(new CovidTestAuthorization());
+        }
+        return authorizations;
+    }
 }

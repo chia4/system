@@ -9,8 +9,26 @@ window.onload = function () {
             $("agency-name").innerText = response["agencyName"];
         }
     }
+    getData();
 }
 
 function $(x) {
     return document.getElementById(x);
+}
+
+function getData() {
+    var dataTable = $("data-table");
+    var request = new XMLHttpRequest();
+    request.open("GET", "/agency/get-authorization");
+    request.send(null);
+    request.onreadystatechange = function () {
+        var response = JSON.parse(request.responseText);
+        for (var set in response) {
+            var row = dataTable.insertRow(-1)
+            var cell = row.insertCell(-1);
+            cell.innerText = response[set]["peopleUsername"];
+            cell = row.insertCell(-1);
+            cell.innerText = response[set]["authorizationTime"];
+        }
+    }
 }
