@@ -100,9 +100,6 @@ public class AgencyController {
         HashMap<String, String> userLoginMap = (HashMap<String, String>) session.getAttribute("userLoginMap");
         String username = userLoginMap.get("username");
         ArrayList<CovidTestAuthorization> authorizations = agencyService.getAuthorization(username);
-        if (authorizations == null) {
-            authorizations = new ArrayList<>();
-        }
         return authorizations;
     }
 

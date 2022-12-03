@@ -1,7 +1,6 @@
 package com.gzu.system.mapper;
 
 import com.gzu.system.pojo.CovidTestAuthorization;
-import com.gzu.system.pojo.CovidTestResult;
 import com.gzu.system.pojo.SimpleAuthorization;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

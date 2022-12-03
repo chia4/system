@@ -40,13 +40,13 @@ function getData() {
     request.send(null);
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status === 200) {
-            var response = JSON.parse(request.responseText);
-            if (response.length === 0) {
+            if (request.responseText === "") {
                 var row = dataTable.insertRow(-1);
                 var cell = row.insertCell(-1);
                 cell.colSpan = "2";
                 cell.innerText = "空";
             } else {
+                var response = JSON.parse(request.responseText);
                 for (var set in response) {
                     var row = dataTable.insertRow(-1);
                     var cell = row.insertCell(-1);

@@ -32,7 +32,8 @@
 
     <select id="selectMapToSimpleAuthorization" resultType="SimpleAuthorization">
         select agency_name,authorization_time from agency_table a,covid_test_authorization c
-        where c.agency_username=a.username and c.people_username=#{peopleUsername}
+        where c.people_username=#{peopleUsername} and c.agency_username=a.username
+        order by authorization_time desc
     </select>
 
     <select id="selectResultsByPeopleUsername" resultType="CovidTestAuthorization">
