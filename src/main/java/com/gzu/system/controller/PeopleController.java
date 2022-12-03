@@ -1,15 +1,15 @@
 package com.gzu.system.controller;
 
 import com.gzu.system.pojo.People;
+import com.gzu.system.pojo.Place;
 import com.gzu.system.service.PeopleService;
+import com.gzu.system.service.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
@@ -18,6 +18,9 @@ public class PeopleController {
 
     @Autowired
     PeopleService peopleService;
+
+    @Autowired
+    PlaceService placeService;
 
     @GetMapping("/people")
     public String index(HttpSession session) {
@@ -60,5 +63,30 @@ public class PeopleController {
             return "redirect:/people";
         }
         throw new RuntimeException("发生错误");
+    }
+
+    /**
+     * 只用来接受来自QRCodeController的AfterScanning的内部转发，
+     * 保证被扫描用户的身份是经过验证的
+     */
+    @GetMapping("/people/record-track")
+    public String recordTrack(HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        String placeUsername = (String) request.getAttribute("placeUsername");
+        if (placeUsername == null) {
+            return "redirect:/people";
+        }
+        HashMap<String, String> userLoginMap = (HashMap<String, String>) session.getAttribute("userLoginMap");
+        String username = userLoginMap.get("username");
+        Place place = placeService.getInformation(placeUsername);
+        int status = placeService.recordTrack(username, placeUsername);
+        if (status == 0) {
+            redirectAttributes.addAttribute("placeName", place.getPlaceName());
+        }
+        return "redirect:/people/record-track-result";
+    }
+
+    @GetMapping("/people/record-track-result")
+    public String recordTrackResult() {
+        return "forward:/people/record-track-result.html";
     }
 }

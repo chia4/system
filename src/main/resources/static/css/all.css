@@ -16,5 +16,8 @@
 
 .warning {
     color: red;
-    margin-left: 80px;
+}
+
+.title {
+    margin-left: 50px;
 }
