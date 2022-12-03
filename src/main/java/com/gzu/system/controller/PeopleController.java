@@ -99,9 +99,9 @@ public class PeopleController {
         HashMap<String, String> userLoginMap = (HashMap<String, String>) session.getAttribute("userLoginMap");
         String username = userLoginMap.get("username");
         ArrayList<SimpleResult> simpleResults = peopleService.getSimpleResult(username);
-        // 只返回最近十次结果(数据库已经排降序返回)
-        if (simpleResults.size() > 10) {
-            return (ArrayList<SimpleResult>) simpleResults.subList(0, 10);
+        // 只返回最近五次结果(数据库已经排降序返回)
+        if (simpleResults != null && simpleResults.size() > 5) {
+            return new ArrayList<>(simpleResults.subList(0, 5));
         } else {
             return simpleResults;
         }
@@ -113,9 +113,9 @@ public class PeopleController {
         HashMap<String, String> userLoginMap = (HashMap<String, String>) session.getAttribute("userLoginMap");
         String username = userLoginMap.get("username");
         ArrayList<SimpleAuthorization> simpleAuthorizations = peopleService.getSimpleAuthorization(username);
-        // 只返回最近十次授权(数据库已经排降序返回)
-        if (simpleAuthorizations.size() > 10) {
-            return (ArrayList<SimpleAuthorization>) simpleAuthorizations.subList(0, 10);
+        // 只返回最近五次授权(数据库已经排降序返回)
+        if (simpleAuthorizations != null && simpleAuthorizations.size() > 5) {
+            return new ArrayList<>(simpleAuthorizations.subList(0, 5));
         } else {
             return simpleAuthorizations;
         }
