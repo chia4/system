@@ -1,7 +1,9 @@
 package com.gzu.system.controller;
 
 import com.gzu.system.pojo.Agency;
+import com.gzu.system.pojo.CovidTestAuthorization;
 import com.gzu.system.service.AgencyService;
+import com.gzu.system.service.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
@@ -17,6 +20,9 @@ import java.util.HashMap;
 public class AgencyController {
     @Autowired
     AgencyService agencyService;
+
+    @Autowired
+    PeopleService peopleService;
 
     @GetMapping("/agency")
     public String index(HttpSession session) {
@@ -60,4 +66,31 @@ public class AgencyController {
         }
         throw new RuntimeException("发生错误");
     }
+
+
+    /**
+     * 只用来接受来自QRCodeController的AfterScanning的内部转发，
+     * 保证被扫描用户的身份是经过验证的
+     */
+    @GetMapping("/agency/registration-sampling")
+    public String registrationSampling(HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        String peopleUsername = (String) request.getAttribute("peopleUsername");
+        if (peopleUsername == null) {
+            return "redirect:/agency";
+        }
+        HashMap<String, String> userLoginMap = (HashMap<String, String>) session.getAttribute("userLoginMap");
+        String username = userLoginMap.get("username");
+        CovidTestAuthorization covidTestAuthorization = agencyService.registrationSampling(peopleUsername, username);
+        if (covidTestAuthorization != null) {
+            redirectAttributes.addAttribute("peopleUsername", peopleUsername);
+            redirectAttributes.addAttribute("authorizationTime", covidTestAuthorization.getAuthorizationTime());
+        }
+        return "redirect:/agency/registration-sampling-result";
+    }
+
+    @GetMapping("/agency/registration-sampling-result")
+    public String registrationSamplingResult() {
+        return "forward:/agency/registration-sampling-result.html";
+    }
+
 }

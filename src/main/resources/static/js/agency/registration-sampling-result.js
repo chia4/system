@@ -9,11 +9,12 @@ window.onload = function () {
         }
     }
 
-    var errorInfo = getParamValue("error");
-    if (errorInfo !== false) {
-        $("error-h").innerText = errorInfo;
+    var peopleUsername = getParamValue("peopleUsername");
+    var authorizationTime = getParamValue("authorizationTime");
+    if (peopleUsername !== false && authorizationTime !== false) {
+        $("feedback").innerText = "采样登记成功: (用户id)" + peopleUsername + " | (时间戳)" + authorizationTime;
+        $("feedback").style.color = "green";
     }
-
 }
 
 function $(x) {

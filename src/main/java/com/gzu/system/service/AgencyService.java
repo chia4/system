@@ -33,17 +33,18 @@ public class AgencyService {
     /** 将大众用户名、机构用户名和当前时间戳(秒为单位)插入covid_test_authorization表
      *  不用验证用户类型，我会在响应层验证
      *  返回值:
-     *  0 - 成功
-     *  1 - 失败
+     *  CovidTestAuthorization - 成功
+     *  null - 失败
      */
     @Transactional
-    public int registrationSampling(String peopleUsername, String agencyUsername){
+    public CovidTestAuthorization registrationSampling(String peopleUsername, String agencyUsername){
         //插入指标
         int count=0;
         //检错指标
         boolean isError=false;
+        int passingTime=0;
         try{
-            int passingTime= (int)(new Date().getTime() / 1000);
+            passingTime= (int)(new Date().getTime() / 1000);
             count=covidTestAuthorizationMapper.insert(peopleUsername,agencyUsername,passingTime);
         }catch (Exception e){
             e.printStackTrace();
@@ -52,10 +53,10 @@ public class AgencyService {
         }
         //如果没插入或者检出错，返回1
         if (isError||count==0){
-            return 1;
+            return null;
         }
         //否则返回0
-        return 0;
+        return new CovidTestAuthorization(peopleUsername, agencyUsername, passingTime);
     }
 
     /** 在covid_test_authorization表里查询agencyUsername的所有授权记录

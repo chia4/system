@@ -11,7 +11,7 @@ window.onload = function () {
 
     var placeName = getParamValue("placeName");
     if (placeName !== false) {
-        $("feedback").innerText = "行程经过: " + decodeURI(placeName);
+        $("feedback").innerText = "行程经过: " + placeName;
         $("feedback").style.color = "green";
     }
 }
@@ -26,7 +26,7 @@ function getParamValue(key) {
     for (var i = 0; i < params.length; i++) {
         var param = params[i].split("=");
         if (param[0] === key) {
-            return param[1];
+            return decodeURI(param[1]);
         }
     }
     return false;

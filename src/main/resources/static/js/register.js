@@ -2,7 +2,7 @@ window.onload = function () {
     var errorInfo = getParamValue("error");
 
     if (errorInfo !== false) {
-        $("error-div").innerText = decodeURI(errorInfo);
+        $("error-div").innerText = errorInfo;
     }
 
     configCheck();
@@ -18,7 +18,7 @@ function getParamValue(key) {
     for (var i = 0; i < params.length; i++) {
         var param = params[i].split("=");
         if (param[0] === key) {
-            return param[1];
+            return decodeURI(param[1]);
         }
     }
     return false;
