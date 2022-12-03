@@ -18,6 +18,28 @@
 
     <h2 id="agency-name" class="title"></h2>
 
+    <form action="/agency/post-result" method="post" id="result-form">
+
+        <label for="form-people-username" class="form-input">大众用户名: </label>
+        <input type="text" name="people-username" id="form-people-username"><br>
+
+        <label for="form-authorization-time" class="form-input">采样时间戳: </label>
+        <input type="text" name="authorization-time" id="form-authorization-time"><br>
+
+        <label for="form-result" class="form-input">结果: </label>
+        <select name="result" id="form-result">
+            <option value="not-selected">-</option>
+            <option value="NEGATIVE">阴性</option>
+            <option value="POSITIVE">阳性</option>
+        </select><br>
+
+        <div id="error-div" class="warning"></div><br>
+
+        <input type="submit" value="提交结果" id="form-submit" class="form-button" disabled="true">
+
+    </form><br>
+
+    <h2 class="title">待录入检测</h2>
     <table id="data-table">
         <tr>
             <td class="bold-cell">检测人用户名</td>

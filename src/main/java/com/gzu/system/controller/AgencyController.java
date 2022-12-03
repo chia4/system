@@ -106,4 +106,27 @@ public class AgencyController {
         }
         return authorizations;
     }
+
+    @PostMapping("/agency/post-result")
+    public String postResult(
+            HttpSession session, @RequestParam("authorization-time") String authorizationTime,
+            @RequestParam("people-username") String peopleUsername, @RequestParam("result") String result,
+            RedirectAttributes redirectAttributes
+    ) {
+        HashMap<String, String> userLoginMap = (HashMap<String, String>) session.getAttribute("userLoginMap");
+        String username = userLoginMap.get("username");
+        int status = agencyService.uploadResult(peopleUsername, username, Integer.parseInt(authorizationTime), result);
+        switch (status) {
+            case 0:
+                redirectAttributes.addAttribute("error", "成功录入" + peopleUsername + "的记录");
+                break;
+            case 1:
+                redirectAttributes.addAttribute("error", "没有找到采样记录，无法录入");
+                break;
+            case 2:
+                redirectAttributes.addAttribute("error", "发生错误");
+                break;
+        }
+        return "redirect:/agency";
+    }
 }
