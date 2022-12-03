@@ -102,7 +102,6 @@ public class AgencyController {
         ArrayList<CovidTestAuthorization> authorizations = agencyService.getAuthorization(username);
         if (authorizations == null) {
             authorizations = new ArrayList<>();
-            authorizations.add(new CovidTestAuthorization());
         }
         return authorizations;
     }
