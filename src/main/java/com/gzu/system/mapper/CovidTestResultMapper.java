@@ -1,6 +1,7 @@
 package com.gzu.system.mapper;
 
 import com.gzu.system.pojo.CovidTestResult;
+import com.gzu.system.pojo.SimpleResult;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,5 +14,7 @@ public interface CovidTestResultMapper {
 
     int insert(@Param("peopleUsername") String peopleUsername,@Param("agencyUsername")  String agencyUsername,
                @Param("resultTime") int resultTime, @Param("result") CovidTestResult.type result);
+
+    ArrayList<SimpleResult> selectMapToSimpleResult(String peopleUsername);
 
 }

@@ -30,5 +30,13 @@
         and authorization_time=#{authorizationTime}
     </delete>
 
+    <select id="selectMapToSimpleAuthorization" resultType="SimpleAuthorization">
+        select agency_name,authorization_time from agency_table a,covid_test_authorization c
+        where c.agency_username=a.username and c.people_username=#{peopleUsername}
+    </select>
+
+    <select id="selectResultsByPeopleUsername" resultType="CovidTestAuthorization">
+        select * from covid_test_authorization where people_username=#{peopleUsername}
+    </select>
 
 </mapper>

@@ -20,7 +20,10 @@
     </insert>
 
 
-
+    <select id="selectMapToSimpleResult" resultType="SimpleResult">
+        select agency_name,result,result_time from covid_test_result c,agency_table a
+        where c.agency_username = a.username and people_username=#{peopleUsername}
+    </select>
 
 
 </mapper>
