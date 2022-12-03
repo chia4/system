@@ -151,6 +151,7 @@ public class AgencyService {
                 new Thread(){
                     @Override
                     public void run() {
+
                         /** 首先验证(peopleUsername, agencyUsername, authorizationTime)是否存在
                          *  于covid_test_authorization表里
                          *  如果存在，在covid_test_authorization表里删除这条记录，在covid_test_result
@@ -208,7 +209,7 @@ public class AgencyService {
                                 //输出密接人名字
                                 System.out.print(pUserName+" ");
                                 //查询场所信息
-                                Place place = placeMapper.selectPlaceByPlaceName(placeName);
+                                Place place = placeMapper.selectPalaceByUserName(placeName);
                                 //旧值和新值比较，如果大就修改，如果小就不处理
                                 if(place.getLowRiskAfter()<newTime){
                                     placeMapper.updateRisk(placeName,newTime);
